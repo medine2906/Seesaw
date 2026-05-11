@@ -1,0 +1,55 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #0a0a0a;
+  --card: #111111;
+  --surface: #1a1a1a;
+  --monad: #8a58ee;
+  --positive: #10b981;
+  --negative: #ef4444;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  background: var(--bg);
+  color: #f5f5f5;
+  font-family: 'Inter', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  scroll-behavior: smooth;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #111; }
+::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #8a58ee55; }
+
+/* Privy modal dark mode overrides */
+[data-privy-dialog] {
+  --privy-color-background: #0a0a0a !important;
+  --privy-color-background-2: #111111 !important;
+  --privy-color-foreground: #f5f5f5 !important;
+  --privy-color-accent: #8a58ee !important;
+}
+
+@layer utilities {
+  .font-display { font-family: 'Space Grotesk', 'Inter', system-ui, sans-serif; }
+  .gradient-border {
+    position: relative;
+    background: linear-gradient(#111, #111) padding-box,
+      linear-gradient(135deg, #8a58ee44, #8a58ee11) border-box;
+    border: 1px solid transparent;
+    border-radius: 0.75rem;
+  }
+  .glow-monad { box-shadow: 0 0 24px #8a58ee33; }
+  .glow-positive { box-shadow: 0 0 16px #10b98133; }
+  .glow-negative { box-shadow: 0 0 16px #ef444433; }
+}

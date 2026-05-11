@@ -1,0 +1,8 @@
+node_modules/
+.next/
+.env.local
+dist/
+artifacts/cache/
+*.log
+package-lock.json
+frontend/next-env.d.ts
