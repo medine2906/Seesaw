@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { usePrivy } from "@privy-io/react-auth";
-import { useWriteContract, useWaitForTransactionReceipt, useReadContract } from "wagmi";
+import { useAccount, useConnect, useWriteContract, useWaitForTransactionReceipt, useReadContract } from "wagmi";
+import { metaMask } from "wagmi/connectors";
 import { Tweet } from "react-tweet";
 import SeesawComponent from "./Seesaw";
 import { SEESAW_ABI, SEESAW_ADDRESS, VOTE_AMOUNT } from "@/lib/contracts";
@@ -22,7 +22,8 @@ interface ContentCardProps {
 }
 
 export default function ContentCard({ contentId, isDemoMode }: ContentCardProps) {
-  const { authenticated, login } = usePrivy();
+  const { isConnected } = useAccount();
+  const { connect } = useConnect();
   const [votePending, setVotePending] = useState<"up" | "down" | null>(null);
   const [countdown, setCountdown] = useState("");
   const [justVoted, setJustVoted] = useState<"up" | "down" | null>(null);
@@ -65,7 +66,7 @@ export default function ContentCard({ contentId, isDemoMode }: ContentCardProps)
   }, [content]);
 
   const vote = (direction: "up" | "down") => {
-    if (!authenticated) { login(); return; }
+    if (!isConnected) { connect({ connector: metaMask() }); return; }
     setVotePending(direction);
     writeContract({
       address: SEESAW_ADDRESS,

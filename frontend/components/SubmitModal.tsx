@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { usePrivy } from "@privy-io/react-auth";
-import { useWriteContract, useWaitForTransactionReceipt } from "wagmi";
+import { useAccount, useConnect, useWriteContract, useWaitForTransactionReceipt } from "wagmi";
+import { metaMask } from "wagmi/connectors";
 import { SEESAW_ABI, SEESAW_ADDRESS } from "@/lib/contracts";
 import { detectContentType } from "@/lib/utils";
 
@@ -14,7 +14,8 @@ interface SubmitModalProps {
 }
 
 export default function SubmitModal({ open, onClose, onSuccess }: SubmitModalProps) {
-  const { authenticated, login } = usePrivy();
+  const { isConnected } = useAccount();
+  const { connect } = useConnect();
   const [uri, setUri] = useState("");
   const [error, setError] = useState("");
 
@@ -30,7 +31,7 @@ export default function SubmitModal({ open, onClose, onSuccess }: SubmitModalPro
 
   const handleSubmit = () => {
     setError("");
-    if (!authenticated) { login(); return; }
+    if (!isConnected) { connect({ connector: metaMask() }); return; }
     if (!uri.trim()) { setError("Enter a URL or text to submit."); return; }
     writeContract({
       address: SEESAW_ADDRESS,

@@ -1,8 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { usePrivy } from "@privy-io/react-auth";
-import { shortenAddress } from "@/lib/utils";
 import ConnectButton from "./ConnectButton";
 
 interface HeaderProps {
@@ -10,8 +8,6 @@ interface HeaderProps {
 }
 
 export default function Header({ onSubmit }: HeaderProps) {
-  const { user } = usePrivy();
-  const wallet = user?.wallet?.address;
 
   return (
     <header className="sticky top-0 z-40 w-full border-b border-white/5 bg-bg/80 backdrop-blur-xl">
